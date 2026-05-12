@@ -1,0 +1,61 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "schema-guard"
+version = "0.1.0"
+description = "Cost-aware tiered repair layer for LLM structured outputs. Tries cheap before smart, falls back to partial."
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "MIT" }
+authors = [{ name = "Tajaddin Gafarov", email = "gafarovtajaddin@gmail.com" }]
+keywords = ["llm", "structured-output", "pydantic", "json-schema", "anthropic", "openai"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+]
+
+dependencies = [
+    "pydantic>=2.5",
+    "typing-extensions>=4.9",
+]
+
+[project.optional-dependencies]
+anthropic = ["anthropic>=0.39"]
+openai = ["openai>=1.40"]
+groq = ["groq>=0.10"]
+bench = ["instructor>=1.5", "pydantic-ai>=0.0.20", "anthropic>=0.39"]
+dev = [
+    "pytest>=8.0",
+    "pytest-asyncio>=0.23",
+    "ruff>=0.6",
+    "mypy>=1.10",
+    "hypothesis>=6.100",
+]
+
+[project.urls]
+Homepage = "https://github.com/Tajaddin/schema-guard"
+Repository = "https://github.com/Tajaddin/schema-guard"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+addopts = "-ra -q"
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B", "SIM"]
+ignore = ["E501"]
