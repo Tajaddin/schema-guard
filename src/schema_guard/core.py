@@ -1,10 +1,10 @@
 """SchemaGuard: tiered, cost-aware repair for LLM structured outputs.
 
 Flow:
-  T1 (primary)         — call the configured primary model, try strict parse + validate
-  T2 (primary repair)  — same primary model, but with a repair prompt over the raw output
-  T3 (smart regen)     — escalate to the more capable model with a strict schema prompt
-  T4 (partial)         — free-of-charge regex extraction + default-fill
+  T1 (primary):         call the configured primary model, try strict parse + validate.
+  T2 (primary repair):  same primary model, repair prompt over the raw output.
+  T3 (smart regen):     escalate to the more capable model with a strict schema prompt.
+  T4 (partial):         free regex extraction + default-fill.
 
 Stops at the first tier whose output validates against the Pydantic schema.
 """
@@ -26,7 +26,6 @@ from schema_guard.repair import (
 )
 from schema_guard.types import (
     Attempt,
-    CompletionResult,
     LLMClient,
     Result,
     Tier,
@@ -45,7 +44,7 @@ class SchemaGuard:
         The LLM the user actually wants to use (usually cheap+fast).
     smart_fallback:
         A more capable LLM used only on T3. If omitted, T3 falls back to the
-        primary with a stricter prompt — still useful but with less lift.
+        primary with a stricter prompt (still useful but with less lift).
     enable_partial_fallback:
         Whether to run T4 partial extraction when all LLM tiers fail.
     max_repair_tokens:

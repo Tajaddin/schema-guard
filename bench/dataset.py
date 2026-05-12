@@ -13,7 +13,7 @@ in production:
 * missing required fields
 * enum values with wrong case
 
-The intent is NOT that any individual LLM call must fail — modern Haiku / 4o-mini
+The intent is not that any individual LLM call must fail. Modern Haiku / 4o-mini
 get most of these right on a first try. The intent is that across 60 prompts, the
 4% of calls that go wrong are the ones every production system has to handle.
 """

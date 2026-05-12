@@ -120,7 +120,7 @@ class AnthropicClient(_PricedClient):
 
 
 _ANTHROPIC_PRICING: dict[str, tuple[float, float]] = {
-    # USD per million tokens (input, output) — public Anthropic pricing as of 2026-01.
+    # USD per million tokens (input, output). Public Anthropic pricing as of 2026-01.
     "claude-haiku-4-5-20251001": (0.80, 4.00),
     "claude-sonnet-4-6": (3.00, 15.00),
     "claude-opus-4-7": (15.00, 75.00),

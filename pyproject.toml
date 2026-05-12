@@ -23,21 +23,21 @@ classifiers = [
 ]
 
 dependencies = [
-    "pydantic>=2.5",
-    "typing-extensions>=4.9",
+    "pydantic==2.9.2",
+    "typing-extensions==4.15.0",
 ]
 
 [project.optional-dependencies]
-anthropic = ["anthropic>=0.39"]
-openai = ["openai>=1.40"]
-groq = ["groq>=0.10"]
-bench = ["instructor>=1.5", "pydantic-ai>=0.0.20", "anthropic>=0.39"]
+anthropic = ["anthropic==0.39.0"]
+openai = ["openai==1.51.2"]
+groq = ["groq==0.11.0"]
+bench = ["instructor==1.6.3", "pydantic-ai==0.0.13", "anthropic==0.39.0"]
 dev = [
-    "pytest>=8.0",
-    "pytest-asyncio>=0.23",
-    "ruff>=0.6",
-    "mypy>=1.10",
-    "hypothesis>=6.100",
+    "pytest==8.3.3",
+    "pytest-asyncio==0.24.0",
+    "ruff==0.6.9",
+    "mypy==1.13.0",
+    "hypothesis==6.115.5",
 ]
 
 [project.urls]
@@ -51,6 +51,8 @@ where = ["src"]
 testpaths = ["tests"]
 python_files = ["test_*.py"]
 addopts = "-ra -q"
+asyncio_mode = "auto"
+asyncio_default_fixture_loop_scope = "function"
 
 [tool.ruff]
 line-length = 100

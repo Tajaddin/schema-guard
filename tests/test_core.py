@@ -90,10 +90,10 @@ def test_cost_accumulates_across_tiers() -> None:
     def h(p, s):
         return "no json"
 
-    # Each call uses ~the same number of tokens; the result should have cumulative cost.
+    # Each call uses about the same number of tokens. The result has cumulative cost.
     primary = MockLLMClient(handler=h, input_cost_per_mtok=10.0, output_cost_per_mtok=10.0)
     r = SchemaGuard(primary=primary).call("extract", Person)
-    # T1 + T2 + T3 + T4(free) — 3 LLM calls all > 0 cost
+    # T1 + T2 + T3 + T4(free): 3 LLM calls all > 0 cost
     assert r.total_cost_usd > 0
     assert r.n_llm_calls == 3
     assert sum(1 for a in r.attempts if a.tier == Tier.T4_PARTIAL) == 1

@@ -2,10 +2,10 @@
 
 Strategies compared on the same prompts + same Anthropic model:
 
-1. ``raw``           — single primary call, ``json.loads`` + Pydantic validate
-2. ``instructor``    — instructor.from_anthropic with response_model + max_retries
-3. ``pydantic-ai``   — Agent(model=..., output_type=Schema).run_sync
-4. ``schema-guard``  — this project: tiered T1→T2→T3→T4
+1. ``raw``:           single primary call, ``json.loads`` + Pydantic validate
+2. ``instructor``:    instructor.from_anthropic with response_model + max_retries
+3. ``pydantic-ai``:   Agent(model=..., output_type=Schema).run_sync
+4. ``schema-guard``:  this project, tiered T1 to T2 to T3 to T4
 
 Metrics:
 * compliance rate (% of prompts that produced a schema-valid object)
@@ -21,7 +21,6 @@ from __future__ import annotations
 
 import argparse
 import json
-import os
 import sys
 import time
 from pathlib import Path
@@ -206,10 +205,10 @@ def summarize(strategy: str, rows: list[dict]) -> dict:
 
 
 def main() -> int:
-    try:
+    import contextlib
+
+    with contextlib.suppress(Exception):
         sys.stdout.reconfigure(encoding="utf-8", errors="replace")  # type: ignore[attr-defined]
-    except Exception:
-        pass
     parser = argparse.ArgumentParser()
     parser.add_argument("--limit", type=int, default=None, help="Subset N tasks")
     parser.add_argument("--seed", type=int, default=7)

@@ -1,8 +1,10 @@
 # schema-guard
 
-> Cost-aware tiered repair for LLM structured outputs. Same 100% compliance as `instructor` and `pydantic-ai`, at **5.5× lower cost** than instructor and **2.7× lower cost** than pydantic-ai — by not paying for retries the model didn't need.
+Cost-aware tiered repair for LLM structured outputs. Same 100 % compliance as `instructor` and `pydantic-ai`, at 5.5× lower cost than instructor and 2.7× lower cost than pydantic-ai, by not paying for retries the model did not need.
 
-[![License](https://img.shields.io/badge/license-MIT-blue)](LICENSE) [![Tests](https://img.shields.io/badge/tests-24%20passing-brightgreen)](#tests) [![Python](https://img.shields.io/badge/python-3.10%2B-blue)]()
+[![ci](https://github.com/Tajaddin/schema-guard/actions/workflows/ci.yml/badge.svg)](https://github.com/Tajaddin/schema-guard/actions/workflows/ci.yml)
+[![License](https://img.shields.io/badge/license-MIT-blue)](LICENSE)
+[![Python](https://img.shields.io/badge/python-3.10%2B-blue)](pyproject.toml)
 
 ## Hero benchmark
 
@@ -15,9 +17,9 @@
 | `pydantic-ai` Agent | 100% | $0.04714 | $0.00094 | 1.06 s | +183% |
 | `instructor` `max_retries=3` | 100% | $0.09584 | $0.00192 | 1.08 s | +475% |
 
-**Headline:** schema-guard matches the bare-metal raw-model cost (+3.8% overhead) while pydantic-ai is 2.7× more expensive and instructor is 5.5× more expensive — at identical compliance.
+Headline: schema-guard matches the bare-metal raw-model cost (+3.8 % overhead) while pydantic-ai costs 2.7× more and instructor 5.5× more at identical compliance.
 
-The reason: instructor and pydantic-ai wrap every call in tool-calling round-trips that double-bill input tokens even when the model produces valid JSON on the first try. schema-guard reads the raw text response; the cheap tiers only fire when validation actually fails.
+The reason: instructor and pydantic-ai wrap every call in tool-calling round-trips. Those double-bill input tokens even when the model produces valid JSON on the first try. schema-guard reads the raw text response. The cheap tiers fire only when validation fails.
 
 Full numbers in [`bench/compare_results.json`](bench/compare_results.json).
 
@@ -29,7 +31,7 @@ A single LLM call to a modern model produces valid JSON ~99% of the time. Existi
 |---|---|---|
 | `instructor` | Retries with the **same** model + error feedback | Already 2-3× raw because every call uses tool-calling |
 | `pydantic-ai` | Retries with the **same** model + Pydantic error | 2-3× raw because every call uses tool-calling |
-| `outlines` | Constrained decoding (logit bias) — only on local models | 0% (no API overhead) but requires logit access |
+| `outlines` | Constrained decoding (logit bias), local models only | 0 % (no API overhead) but requires logit access |
 | **`schema-guard`** | T1 raw call → T2 cheap repair → T3 smart regen → T4 partial extract | **+3.8% raw** because most calls stop at T1 |
 
 The trick: **don't pay until you have to.** schema-guard issues a normal text completion at T1. If `json.loads` + Pydantic validate pass, it returns immediately at raw-model cost. The repair tiers only fire when the validator complains.
@@ -174,7 +176,7 @@ Covers each tier in isolation, full escalation chain, cost accumulation, partial
 ```
 .
 ├── src/schema_guard/
-│   ├── core.py          # SchemaGuard class — the tiered escalation
+│   ├── core.py          # SchemaGuard class, the tiered escalation
 │   ├── types.py         # LLMClient protocol, Tier, Attempt, Result
 │   ├── clients.py       # Anthropic / OpenAI / Groq / Mock adapters
 │   └── repair.py        # JSON normalization + repair prompts + partial extract
@@ -185,14 +187,14 @@ Covers each tier in isolation, full escalation chain, cost accumulation, partial
     └── compare_results.json
 ```
 
-## Limitations
+## Caveats
 
-**Outlines is not in the comparison.** Outlines uses logit-level constraints during generation. That's fundamentally incompatible with closed-API models (Claude, GPT-4o, etc.) because they don't expose logits. If you run a local model with vLLM/llama.cpp, Outlines is unbeatable (0% overhead, guaranteed valid output) and you should use it instead of schema-guard.
+Outlines is not in the comparison. Outlines uses logit-level constraints during generation. Closed-API models (Claude, GPT-4o, and so on) do not expose logits, so Outlines does not apply. Running a local model with vLLM or llama.cpp? Outlines is unbeatable (0 % overhead, guaranteed valid output) and you should use it instead of schema-guard.
 
-**Compliance differences will widen on smaller models.** All four strategies hit 100% on Haiku 4.5 because Haiku is reliable enough that no escalation fires. On a less capable model (Llama-3.1-8B, Phi-3-mini), I would expect raw to drop below 95% and schema-guard's T2/T3 lift to become visible. That run is left to the reader — the unit tests in `tests/test_core.py` exercise each tier in isolation.
+Compliance differences widen on smaller models. All four strategies hit 100 % on Haiku 4.5 because Haiku is reliable enough no escalation fires. On a less capable model (Llama-3.1-8B, Phi-3-mini), expect raw to drop below 95 % and schema-guard's T2/T3 lift to become visible. The run is left to the reader. The unit tests in `tests/test_core.py` exercise each tier in isolation.
 
-**Cost figures assume public list prices.** Enterprise contracts, batch APIs, and prompt caching will shift the absolute numbers, but the relative shape (instructor and pydantic-ai use 2-5× the tokens of raw) is intrinsic to their algorithms, not to pricing.
+Cost figures assume public list prices. Enterprise contracts, batch APIs, and prompt caching shift the absolute numbers, but the relative shape (instructor and pydantic-ai use 2 to 5× the tokens of raw) is intrinsic to their algorithms, not to pricing.
 
 ## License
 
-MIT — see [LICENSE](LICENSE).
+MIT. See [LICENSE](LICENSE).
