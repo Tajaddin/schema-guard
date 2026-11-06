@@ -1,6 +1,6 @@
 # schema-guard
 
-Cost-aware tiered repair for LLM structured outputs. Same 100 % compliance as `instructor` and `pydantic-ai`, at 2.77× lower cost than instructor and 2.72× lower cost than pydantic-ai, by not paying for retries the model did not need.
+Cost-aware tiered repair for LLM structured outputs. Same 100 % compliance as `instructor` and `pydantic-ai`, at 2.77× lower cost than instructor and 2.72× lower cost than pydantic-ai, by asking for plain-text JSON instead of a tool call and escalating only when validation fails.
 
 [![ci](https://github.com/Tajaddin/schema-guard/actions/workflows/ci.yml/badge.svg)](https://github.com/Tajaddin/schema-guard/actions/workflows/ci.yml)
 [![License](https://img.shields.io/badge/license-MIT-blue)](LICENSE)
@@ -19,7 +19,7 @@ Cost-aware tiered repair for LLM structured outputs. Same 100 % compliance as `i
 
 Headline: schema-guard matches the bare-metal raw-model cost (+3.8 % overhead) while pydantic-ai costs 2.72× more and instructor 2.77× more at identical compliance.
 
-The reason: instructor and pydantic-ai wrap every call in tool-calling round-trips. Those double-bill input tokens even when the model produces valid JSON on the first try. schema-guard reads the raw text response. The cheap tiers fire only when validation fails.
+The reason: instructor and pydantic-ai request the object as a tool call, so every request carries a tool definition and the tool-use system prompt the API adds, even when the first answer is valid. schema-guard asks for plain-text JSON and validates it; the repair tiers fire only when validation fails. In this run they never fired: all 50 schema-guard tasks stopped at T1 after one call, so the saving comes from the request format, not from skipped retries. The run did not record token counts, so how the gap splits between input and output tokens is not measured.
 
 Full numbers in [`bench/compare_results.json`](bench/compare_results.json). The instructor costs were corrected on 2026-11-06: the original script counted the tokens of every successful instructor call twice, so those recorded costs were halved. The same day, every cost was rescaled from $0.80/$4 to Haiku 4.5's list price of $1/$5 per million tokens, an exact factor of 1.25 because every call in the run went to Haiku. Neither correction was a re-run (see `note` in the results file).
 
@@ -161,15 +161,15 @@ python bench/compare.py --limit 10 --strategies raw schema-guard
 ## Tests
 
 ```bash
-pip install -e ".[bench,dev]"
+pip install -e ".[anthropic,openai,groq,bench,dev]"
 pytest -ra
 ```
 
 ```
-27 passed in 3.80s
+30 passed
 ```
 
-Covers each tier in isolation, full escalation chain, cost accumulation, partial extraction, schema validation, adversarial JSON (smart quotes, trailing commas, embedded prose, single quotes, markdown fences), and the benchmark's instructor cost accounting. Without the `bench` extra the accounting tests are skipped.
+Covers each tier in isolation, full escalation chain, cost accumulation, partial extraction, schema validation, adversarial JSON (smart quotes, trailing commas, embedded prose, single quotes, markdown fences), the benchmark's instructor cost accounting, and construction of each provider client against its pinned SDK. Tests that need an SDK extra that is not installed are skipped.
 
 ## Project layout
 
@@ -180,7 +180,7 @@ Covers each tier in isolation, full escalation chain, cost accumulation, partial
 │   ├── types.py         # LLMClient protocol, Tier, Attempt, Result
 │   ├── clients.py       # Anthropic / OpenAI / Groq / Mock adapters
 │   └── repair.py        # JSON normalization + repair prompts + partial extract
-├── tests/               # 27 pytest cases
+├── tests/               # 30 pytest cases
 └── bench/
     ├── dataset.py       # 50 adversarial structured-output tasks
     ├── compare.py       # Head-to-head benchmark runner
