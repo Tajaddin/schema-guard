@@ -97,7 +97,8 @@ def run_instructor(prompt: str, schema: Any, max_retries: int = 3) -> dict:
     raw_client = Anthropic()
     client = instructor.from_anthropic(raw_client)
     start = time.perf_counter()
-    # Instructor doesn't expose token counts directly; intercept by attaching a hook.
+    # The hook sees each attempt's own usage, failed attempts included. Do not also add
+    # completion.usage: instructor overwrites it with the running total of all attempts.
     usage_log: list[tuple[int, int]] = []
 
     def _on_response(resp):
@@ -106,7 +107,7 @@ def run_instructor(prompt: str, schema: Any, max_retries: int = 3) -> dict:
 
     try:
         client.on("completion:response", _on_response)
-        obj, completion = client.messages.create_with_completion(
+        obj = client.messages.create(
             model=PRIMARY_MODEL,
             max_tokens=1000,
             messages=[{"role": "user", "content": prompt}],
@@ -114,8 +115,6 @@ def run_instructor(prompt: str, schema: Any, max_retries: int = 3) -> dict:
             max_retries=max_retries,
         )
         elapsed = int((time.perf_counter() - start) * 1000)
-        if hasattr(completion, "usage"):
-            usage_log.append((completion.usage.input_tokens, completion.usage.output_tokens))
         total_in = sum(i for i, _ in usage_log)
         total_out = sum(o for _, o in usage_log)
         cost = cost_of(PRIMARY_MODEL, total_in, total_out)
