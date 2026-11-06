@@ -1,6 +1,6 @@
 # schema-guard
 
-Cost-aware tiered repair for LLM structured outputs. Same 100 % compliance as `instructor` and `pydantic-ai`, at 5.5× lower cost than instructor and 2.7× lower cost than pydantic-ai, by not paying for retries the model did not need.
+Cost-aware tiered repair for LLM structured outputs. Same 100 % compliance as `instructor` and `pydantic-ai`, at 2.77× lower cost than instructor and 2.72× lower cost than pydantic-ai, by not paying for retries the model did not need.
 
 [![ci](https://github.com/Tajaddin/schema-guard/actions/workflows/ci.yml/badge.svg)](https://github.com/Tajaddin/schema-guard/actions/workflows/ci.yml)
 [![License](https://img.shields.io/badge/license-MIT-blue)](LICENSE)
@@ -15,13 +15,13 @@ Cost-aware tiered repair for LLM structured outputs. Same 100 % compliance as `i
 | `raw` model + Pydantic validate | 100% | $0.01667 | $0.00033 | 0.97 s | baseline |
 | **`schema-guard`** (this project) | **100%** | **$0.01731** | **$0.00035** | **0.92 s** | **+3.8%** |
 | `pydantic-ai` Agent | 100% | $0.04714 | $0.00094 | 1.06 s | +183% |
-| `instructor` `max_retries=3` | 100% | $0.09584 | $0.00192 | 1.08 s | +475% |
+| `instructor` `max_retries=3` | 100% | $0.04792 | $0.00096 | 1.08 s | +187% |
 
-Headline: schema-guard matches the bare-metal raw-model cost (+3.8 % overhead) while pydantic-ai costs 2.7× more and instructor 5.5× more at identical compliance.
+Headline: schema-guard matches the bare-metal raw-model cost (+3.8 % overhead) while pydantic-ai costs 2.72× more and instructor 2.77× more at identical compliance.
 
 The reason: instructor and pydantic-ai wrap every call in tool-calling round-trips. Those double-bill input tokens even when the model produces valid JSON on the first try. schema-guard reads the raw text response. The cheap tiers fire only when validation fails.
 
-Full numbers in [`bench/compare_results.json`](bench/compare_results.json).
+Full numbers in [`bench/compare_results.json`](bench/compare_results.json). The instructor costs were corrected on 2026-11-06: the original script counted the tokens of every successful instructor call twice, so those recorded costs were halved (see `note` in the results file).
 
 ## Why "tiered" repair
 
@@ -150,7 +150,7 @@ export ANTHROPIC_API_KEY=sk-ant-...
 python bench/compare.py --seed 7
 ```
 
-Cost on Haiku 4.5 + Sonnet 4.6: ~$0.18 for the full 50-task run across all 4 strategies. Outputs `bench/compare_results.json` and prints the summary table.
+Cost on Haiku 4.5 + Sonnet 4.6: ~$0.13 for the full 50-task run across all 4 strategies. Outputs `bench/compare_results.json` and prints the summary table.
 
 To run with a subset:
 
@@ -161,15 +161,15 @@ python bench/compare.py --limit 10 --strategies raw schema-guard
 ## Tests
 
 ```bash
-pip install -e ".[dev]"
+pip install -e ".[bench,dev]"
 pytest -ra
 ```
 
 ```
-24 passed in 1.32s
+27 passed in 3.80s
 ```
 
-Covers each tier in isolation, full escalation chain, cost accumulation, partial extraction, schema validation, and adversarial JSON (smart quotes, trailing commas, embedded prose, single quotes, markdown fences).
+Covers each tier in isolation, full escalation chain, cost accumulation, partial extraction, schema validation, adversarial JSON (smart quotes, trailing commas, embedded prose, single quotes, markdown fences), and the benchmark's instructor cost accounting. Without the `bench` extra the accounting tests are skipped.
 
 ## Project layout
 
@@ -180,7 +180,7 @@ Covers each tier in isolation, full escalation chain, cost accumulation, partial
 │   ├── types.py         # LLMClient protocol, Tier, Attempt, Result
 │   ├── clients.py       # Anthropic / OpenAI / Groq / Mock adapters
 │   └── repair.py        # JSON normalization + repair prompts + partial extract
-├── tests/               # 24 pytest cases
+├── tests/               # 27 pytest cases
 └── bench/
     ├── dataset.py       # 50 adversarial structured-output tasks
     ├── compare.py       # Head-to-head benchmark runner
@@ -193,7 +193,7 @@ Outlines is not in the comparison. Outlines uses logit-level constraints during 
 
 Compliance differences widen on smaller models. All four strategies hit 100 % on Haiku 4.5 because Haiku is reliable enough no escalation fires. On a less capable model (Llama-3.1-8B, Phi-3-mini), expect raw to drop below 95 % and schema-guard's T2/T3 lift to become visible. The run is left to the reader. The unit tests in `tests/test_core.py` exercise each tier in isolation.
 
-Cost figures assume public list prices. Enterprise contracts, batch APIs, and prompt caching shift the absolute numbers, but the relative shape (instructor and pydantic-ai use 2 to 5× the tokens of raw) is intrinsic to their algorithms, not to pricing.
+Cost figures assume public list prices. Enterprise contracts, batch APIs, and prompt caching shift the absolute numbers, but the relative shape (instructor and pydantic-ai cost 2.87× and 2.83× as much as raw here) is intrinsic to their algorithms, not to pricing.
 
 ## License
 

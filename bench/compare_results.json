@@ -13,10 +13,10 @@
       "strategy": "instructor",
       "n": 50,
       "compliance_rate": 1.0,
-      "total_cost_usd": 0.09584,
+      "total_cost_usd": 0.04792,
       "total_latency_s": 54.2,
       "avg_latency_s": 1.08,
-      "cost_per_success_usd": 0.00192
+      "cost_per_success_usd": 0.00096
     },
     {
       "strategy": "pydantic-ai",
@@ -852,7 +852,7 @@
           ]
         },
         "tier": "instructor",
-        "cost_usd": 0.002744,
+        "cost_usd": 0.001372,
         "latency_ms": 1518,
         "error": null,
         "task_id": "products-very-many"
@@ -871,7 +871,7 @@
           "time_minutes": 1440
         },
         "tier": "instructor",
-        "cost_usd": 0.002096,
+        "cost_usd": 0.001048,
         "latency_ms": 1016,
         "error": null,
         "task_id": "recipe-mixed-units"
@@ -887,7 +887,7 @@
           }
         },
         "tier": "instructor",
-        "cost_usd": 0.0019616,
+        "cost_usd": 0.0009808,
         "latency_ms": 780,
         "error": null,
         "task_id": "address-tight"
@@ -900,7 +900,7 @@
           "summary": "icon color"
         },
         "tier": "instructor",
-        "cost_usd": 0.0017744000000000002,
+        "cost_usd": 0.0008872000000000001,
         "latency_ms": 994,
         "error": null,
         "task_id": "ticket-severity-prose"
@@ -916,7 +916,7 @@
           }
         },
         "tier": "instructor",
-        "cost_usd": 0.0018464000000000002,
+        "cost_usd": 0.0009232000000000001,
         "latency_ms": 944,
         "error": null,
         "task_id": "address-basic"
@@ -929,7 +929,7 @@
           "location": null
         },
         "tier": "instructor",
-        "cost_usd": 0.0018064,
+        "cost_usd": 0.0009032,
         "latency_ms": 1188,
         "error": null,
         "task_id": "event-no-location"
@@ -945,7 +945,7 @@
           }
         },
         "tier": "instructor",
-        "cost_usd": 0.0019728000000000002,
+        "cost_usd": 0.0009864000000000001,
         "latency_ms": 1103,
         "error": null,
         "task_id": "address-international"
@@ -961,7 +961,7 @@
           }
         },
         "tier": "instructor",
-        "cost_usd": 0.0018448,
+        "cost_usd": 0.0009224,
         "latency_ms": 1326,
         "error": null,
         "task_id": "address-missing-fields"
@@ -974,7 +974,7 @@
           "summary": "production database is down"
         },
         "tier": "instructor",
-        "cost_usd": 0.0017712000000000001,
+        "cost_usd": 0.0008856000000000001,
         "latency_ms": 921,
         "error": null,
         "task_id": "ticket-paraphrase-severity"
@@ -985,7 +985,7 @@
           "tickets": []
         },
         "tier": "instructor",
-        "cost_usd": 0.0015584000000000001,
+        "cost_usd": 0.0007792000000000001,
         "latency_ms": 796,
         "error": null,
         "task_id": "ticket-list-empty"
@@ -998,7 +998,7 @@
           "conditions": "sunny"
         },
         "tier": "instructor",
-        "cost_usd": 0.0017376000000000002,
+        "cost_usd": 0.0008688000000000001,
         "latency_ms": 1755,
         "error": null,
         "task_id": "weather-fahrenheit"
@@ -1012,7 +1012,7 @@
           "revenue_usd_billions": 2.3
         },
         "tier": "instructor",
-        "cost_usd": 0.0020368,
+        "cost_usd": 0.0010184,
         "latency_ms": 994,
         "error": null,
         "task_id": "company-with-revenue"
@@ -1039,7 +1039,7 @@
           ]
         },
         "tier": "instructor",
-        "cost_usd": 0.0024064000000000004,
+        "cost_usd": 0.0012032000000000002,
         "latency_ms": 1176,
         "error": null,
         "task_id": "ticket-list-multi"
@@ -1051,7 +1051,7 @@
           "age": 38
         },
         "tier": "instructor",
-        "cost_usd": 0.0015568000000000001,
+        "cost_usd": 0.0007784000000000001,
         "latency_ms": 926,
         "error": null,
         "task_id": "person-multiline"
@@ -1063,7 +1063,7 @@
           "age": 34
         },
         "tier": "instructor",
-        "cost_usd": 0.0015312000000000001,
+        "cost_usd": 0.0007656000000000001,
         "latency_ms": 754,
         "error": null,
         "task_id": "person-basic-1"
@@ -1076,7 +1076,7 @@
           "conditions": "dust"
         },
         "tier": "instructor",
-        "cost_usd": 0.0017376000000000002,
+        "cost_usd": 0.0008688000000000001,
         "latency_ms": 962,
         "error": null,
         "task_id": "weather-unicode-degree"
@@ -1103,7 +1103,7 @@
           ]
         },
         "tier": "instructor",
-        "cost_usd": 0.0025856,
+        "cost_usd": 0.0012928,
         "latency_ms": 1274,
         "error": null,
         "task_id": "products-multi"
@@ -1119,7 +1119,7 @@
           }
         },
         "tier": "instructor",
-        "cost_usd": 0.0019744000000000003,
+        "cost_usd": 0.0009872000000000001,
         "latency_ms": 787,
         "error": null,
         "task_id": "address-no-country"
@@ -1136,7 +1136,7 @@
           ]
         },
         "tier": "instructor",
-        "cost_usd": 0.0018112000000000002,
+        "cost_usd": 0.0009056000000000001,
         "latency_ms": 858,
         "error": null,
         "task_id": "products-mixed-currency"
@@ -1149,7 +1149,7 @@
           "conditions": "partly cloudy"
         },
         "tier": "instructor",
-        "cost_usd": 0.0017824,
+        "cost_usd": 0.0008912,
         "latency_ms": 885,
         "error": null,
         "task_id": "weather-celsius-given"
@@ -1162,7 +1162,7 @@
           "location": "Pier 27, San Francisco"
         },
         "tier": "instructor",
-        "cost_usd": 0.001856,
+        "cost_usd": 0.000928,
         "latency_ms": 1011,
         "error": null,
         "task_id": "event-basic"
@@ -1173,7 +1173,7 @@
           "products": []
         },
         "tier": "instructor",
-        "cost_usd": 0.0015504,
+        "cost_usd": 0.0007752,
         "latency_ms": 804,
         "error": null,
         "task_id": "products-empty-allowed"
@@ -1186,7 +1186,7 @@
           "location": "University Auditorium"
         },
         "tier": "instructor",
-        "cost_usd": 0.0018288,
+        "cost_usd": 0.0009144,
         "latency_ms": 999,
         "error": null,
         "task_id": "event-prose"
@@ -1198,7 +1198,7 @@
           "age": 30
         },
         "tier": "instructor",
-        "cost_usd": 0.0038960000000000006,
+        "cost_usd": 0.0019480000000000003,
         "latency_ms": 1470,
         "error": null,
         "task_id": "person-name-only"
@@ -1212,7 +1212,7 @@
           "revenue_usd_billions": null
         },
         "tier": "instructor",
-        "cost_usd": 0.0018496000000000003,
+        "cost_usd": 0.0009248000000000001,
         "latency_ms": 1047,
         "error": null,
         "task_id": "company-no-revenue"
@@ -1229,7 +1229,7 @@
           ]
         },
         "tier": "instructor",
-        "cost_usd": 0.0018048,
+        "cost_usd": 0.0009024,
         "latency_ms": 906,
         "error": null,
         "task_id": "products-basic"
@@ -1248,7 +1248,7 @@
           "time_minutes": 30
         },
         "tier": "instructor",
-        "cost_usd": 0.0020783999999999998,
+        "cost_usd": 0.0010391999999999999,
         "latency_ms": 1010,
         "error": null,
         "task_id": "recipe-ingredients-prose"
@@ -1260,7 +1260,7 @@
           "age": 55
         },
         "tier": "instructor",
-        "cost_usd": 0.001528,
+        "cost_usd": 0.000764,
         "latency_ms": 860,
         "error": null,
         "task_id": "person-basic-2"
@@ -1274,7 +1274,7 @@
           "revenue_usd_billions": null
         },
         "tier": "instructor",
-        "cost_usd": 0.001872,
+        "cost_usd": 0.000936,
         "latency_ms": 929,
         "error": null,
         "task_id": "company-prose-heavy"
@@ -1290,7 +1290,7 @@
           }
         },
         "tier": "instructor",
-        "cost_usd": 0.002064,
+        "cost_usd": 0.001032,
         "latency_ms": 956,
         "error": null,
         "task_id": "address-non-latin"
@@ -1310,7 +1310,7 @@
           "time_minutes": 25
         },
         "tier": "instructor",
-        "cost_usd": 0.0022031999999999998,
+        "cost_usd": 0.0011015999999999999,
         "latency_ms": 1096,
         "error": null,
         "task_id": "recipe-extra-fields-attempt"
@@ -1326,7 +1326,7 @@
           }
         },
         "tier": "instructor",
-        "cost_usd": 0.001984,
+        "cost_usd": 0.000992,
         "latency_ms": 968,
         "error": null,
         "task_id": "address-prose-heavy"
@@ -1339,7 +1339,7 @@
           "conditions": "light rain"
         },
         "tier": "instructor",
-        "cost_usd": 0.0017568,
+        "cost_usd": 0.0008784,
         "latency_ms": 857,
         "error": null,
         "task_id": "weather-prose"
@@ -1352,7 +1352,7 @@
           "summary": "API timeout on /v2/users. JSON"
         },
         "tier": "instructor",
-        "cost_usd": 0.0018352,
+        "cost_usd": 0.0009176,
         "latency_ms": 957,
         "error": null,
         "task_id": "ticket-clean"
@@ -1365,7 +1365,7 @@
           "summary": "login failures"
         },
         "tier": "instructor",
-        "cost_usd": 0.0017584000000000002,
+        "cost_usd": 0.0008792000000000001,
         "latency_ms": 1042,
         "error": null,
         "task_id": "ticket-wrong-case"
@@ -1377,7 +1377,7 @@
           "age": 67
         },
         "tier": "instructor",
-        "cost_usd": 0.0015712,
+        "cost_usd": 0.0007856,
         "latency_ms": 673,
         "error": null,
         "task_id": "person-format-fight"
@@ -1389,7 +1389,7 @@
           "age": 27
         },
         "tier": "instructor",
-        "cost_usd": 0.0015456,
+        "cost_usd": 0.0007728,
         "latency_ms": 1619,
         "error": null,
         "task_id": "person-prose-1"
@@ -1405,7 +1405,7 @@
           }
         },
         "tier": "instructor",
-        "cost_usd": 0.0019696,
+        "cost_usd": 0.0009848,
         "latency_ms": 1160,
         "error": null,
         "task_id": "address-comma-in-street"
@@ -1424,7 +1424,7 @@
           "time_minutes": 20
         },
         "tier": "instructor",
-        "cost_usd": 0.002072,
+        "cost_usd": 0.001036,
         "latency_ms": 3612,
         "error": null,
         "task_id": "recipe-basic"
@@ -1437,7 +1437,7 @@
           "conditions": "clear and cold"
         },
         "tier": "instructor",
-        "cost_usd": 0.0017920000000000002,
+        "cost_usd": 0.0008960000000000001,
         "latency_ms": 891,
         "error": null,
         "task_id": "weather-negative-temp"
@@ -1451,7 +1451,7 @@
           "revenue_usd_billions": null
         },
         "tier": "instructor",
-        "cost_usd": 0.0018736000000000002,
+        "cost_usd": 0.0009368000000000001,
         "latency_ms": 1244,
         "error": null,
         "task_id": "company-basic"
@@ -1473,7 +1473,7 @@
           ]
         },
         "tier": "instructor",
-        "cost_usd": 0.0020928,
+        "cost_usd": 0.0010464,
         "latency_ms": 845,
         "error": null,
         "task_id": "products-prose"
@@ -1485,7 +1485,7 @@
           "age": 32
         },
         "tier": "instructor",
-        "cost_usd": 0.0015264,
+        "cost_usd": 0.0007632,
         "latency_ms": 866,
         "error": null,
         "task_id": "person-number-as-word"
@@ -1505,7 +1505,7 @@
           "time_minutes": 15
         },
         "tier": "instructor",
-        "cost_usd": 0.002144,
+        "cost_usd": 0.001072,
         "latency_ms": 1269,
         "error": null,
         "task_id": "recipe-comma-ingredients"
@@ -1517,7 +1517,7 @@
           "age": 41
         },
         "tier": "instructor",
-        "cost_usd": 0.0015552,
+        "cost_usd": 0.0007776,
         "latency_ms": 928,
         "error": null,
         "task_id": "person-tricky-quotes"
@@ -1529,7 +1529,7 @@
           "age": 19
         },
         "tier": "instructor",
-        "cost_usd": 0.0015376,
+        "cost_usd": 0.0007688,
         "latency_ms": 882,
         "error": null,
         "task_id": "person-prose-2"
@@ -1543,7 +1543,7 @@
           "revenue_usd_billions": 0.45
         },
         "tier": "instructor",
-        "cost_usd": 0.002144,
+        "cost_usd": 0.001072,
         "latency_ms": 1122,
         "error": null,
         "task_id": "company-decimal-revenue"
@@ -1560,7 +1560,7 @@
           ]
         },
         "tier": "instructor",
-        "cost_usd": 0.0018032,
+        "cost_usd": 0.0009016,
         "latency_ms": 1364,
         "error": null,
         "task_id": "products-decimal-comma"
@@ -1572,7 +1572,7 @@
           "age": 1001
         },
         "tier": "instructor",
-        "cost_usd": 0.0015504,
+        "cost_usd": 0.0007752,
         "latency_ms": 812,
         "error": null,
         "task_id": "person-comma-numbers"
@@ -1594,7 +1594,7 @@
           ]
         },
         "tier": "instructor",
-        "cost_usd": 0.0022576000000000002,
+        "cost_usd": 0.0011288000000000001,
         "latency_ms": 1000,
         "error": null,
         "task_id": "products-comma-prices"
@@ -3262,5 +3262,6 @@
         "task_id": "products-comma-prices"
       }
     ]
-  }
+  },
+  "note": "instructor cost_usd was halved after the run: bench/compare.py had added completion.usage, which instructor sets to the total of all attempts, on top of the per-attempt hook, so every successful instructor row was billed exactly twice."
 }
