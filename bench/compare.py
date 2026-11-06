@@ -36,8 +36,8 @@ from schema_guard import AnthropicClient, SchemaGuard
 from schema_guard.repair import try_json_loads
 
 # Public Anthropic Haiku 4.5 pricing (USD per million tokens).
-HAIKU_IN_COST = 0.80
-HAIKU_OUT_COST = 4.00
+HAIKU_IN_COST = 1.00
+HAIKU_OUT_COST = 5.00
 SONNET_IN_COST = 3.00
 SONNET_OUT_COST = 15.00
 

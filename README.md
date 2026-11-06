@@ -12,16 +12,16 @@ Cost-aware tiered repair for LLM structured outputs. Same 100 % compliance as `i
 
 | Strategy | Compliance | Total cost | Cost/success | Avg latency | Overhead vs raw |
 |---|---:|---:|---:|---:|---:|
-| `raw` model + Pydantic validate | 100% | $0.01667 | $0.00033 | 0.97 s | baseline |
-| **`schema-guard`** (this project) | **100%** | **$0.01731** | **$0.00035** | **0.92 s** | **+3.8%** |
-| `pydantic-ai` Agent | 100% | $0.04714 | $0.00094 | 1.06 s | +183% |
-| `instructor` `max_retries=3` | 100% | $0.04792 | $0.00096 | 1.08 s | +187% |
+| `raw` model + Pydantic validate | 100% | $0.02084 | $0.00042 | 0.97 s | baseline |
+| **`schema-guard`** (this project) | **100%** | **$0.02164** | **$0.00043** | **0.92 s** | **+3.8%** |
+| `pydantic-ai` Agent | 100% | $0.05893 | $0.00118 | 1.06 s | +183% |
+| `instructor` `max_retries=3` | 100% | $0.05990 | $0.00120 | 1.08 s | +187% |
 
 Headline: schema-guard matches the bare-metal raw-model cost (+3.8 % overhead) while pydantic-ai costs 2.72× more and instructor 2.77× more at identical compliance.
 
 The reason: instructor and pydantic-ai wrap every call in tool-calling round-trips. Those double-bill input tokens even when the model produces valid JSON on the first try. schema-guard reads the raw text response. The cheap tiers fire only when validation fails.
 
-Full numbers in [`bench/compare_results.json`](bench/compare_results.json). The instructor costs were corrected on 2026-11-06: the original script counted the tokens of every successful instructor call twice, so those recorded costs were halved (see `note` in the results file).
+Full numbers in [`bench/compare_results.json`](bench/compare_results.json). The instructor costs were corrected on 2026-11-06: the original script counted the tokens of every successful instructor call twice, so those recorded costs were halved. The same day, every cost was rescaled from $0.80/$4 to Haiku 4.5's list price of $1/$5 per million tokens, an exact factor of 1.25 because every call in the run went to Haiku. Neither correction was a re-run (see `note` in the results file).
 
 ## Why "tiered" repair
 
@@ -150,7 +150,7 @@ export ANTHROPIC_API_KEY=sk-ant-...
 python bench/compare.py --seed 7
 ```
 
-Cost on Haiku 4.5 + Sonnet 4.6: ~$0.13 for the full 50-task run across all 4 strategies. Outputs `bench/compare_results.json` and prints the summary table.
+Cost on Haiku 4.5 + Sonnet 4.6: ~$0.16 for the full 50-task run across all 4 strategies. Outputs `bench/compare_results.json` and prints the summary table.
 
 To run with a subset:
 
